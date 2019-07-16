@@ -58,8 +58,8 @@ public struct SlidingTabView : View {
     /// The accent color when the tab is not selected
     let inactiveAccentColor: Color
     
-    /// The color of the selection bar
-    let selectionBarColor: Color
+    /// The gradient of the selection bar
+    let selectionBarGradient: LinearGradient
     
     /// The tab color when the tab is not selected
     let inactiveTabColor: Color
@@ -84,7 +84,7 @@ public struct SlidingTabView : View {
                 animation: Animation = .spring(damping: 12),
                 activeAccentColor: Color = .blue,
                 inactiveAccentColor: Color = Color.black.opacity(0.4),
-                selectionBarColor: Color = .blue,
+                selectionBarGradient: LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color.white]), startPoint: .init(x: 0, y: 0), endPoint: .init(x: 1, y: 0)),
                 inactiveTabColor: Color = .clear,
                 activeTabColor: Color = .clear,
                 selectionBarHeight: Length = 2,
@@ -96,7 +96,7 @@ public struct SlidingTabView : View {
         self.animation = animation
         self.activeAccentColor = activeAccentColor
         self.inactiveAccentColor = inactiveAccentColor
-        self.selectionBarColor = selectionBarColor
+        self.selectionBarGradient = selectionBarGradient
         self.inactiveTabColor = inactiveTabColor
         self.activeTabColor = activeTabColor
         self.selectionBarHeight = selectionBarHeight
@@ -136,7 +136,7 @@ public struct SlidingTabView : View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Rectangle()
-                        .fill(self.selectionBarColor)
+                        .fill(self.selectionBarGradient)
                         .frame(width: self.tabWidth(from: geometry.size.width), height: self.selectionBarHeight, alignment: .leading)
                         .offset(x: self.selectionBarXOffset(from: geometry.size.width), y: 0)
                         .animation(self.animation)
@@ -176,7 +176,7 @@ struct SlidingTabConsumerView : View {
                            tabs: ["First", "Second"],
                            font: .body,
                            activeAccentColor: Color.blue,
-                           selectionBarColor: Color.blue)
+                           selectionBarGradient: LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .init(x: 0, y: 0), endPoint: .init(x: 1, y: 0)))
             (selectedTabIndex == 0 ? Text("First View") : Text("Second View")).padding()
             Spacer()
         }
